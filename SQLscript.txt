@@ -1,0 +1,43 @@
+CREATE TABLE role (
+id_role int not null AUTO_INCREMENT PRIMARY KEY,
+    nom_role varchar (200) not null
+);
+CREATE TABLE utilisateur(
+    id_user int not null PRIMARY KEY AUTO_INCREMENT,
+    nom_user varchar(200) NOT null,
+    email varchar (200) not null,
+    PASSWORD varchar (200) not null,
+    id_role int not null ,
+    FOREIGN key (id_role) REFERENCES role(id_role) ON DELETE CASCADE
+);
+
+CREATE TABLE categorie (
+id_categorie int not null PRIMARY key ,
+    nom varchar (100) not null 
+);
+
+CREATE TABLE vehicule(
+id_vehicule int not null PRIMARY key ,
+    marque varchar (100)not null,
+    madele varchar (100) not null ,
+    prix int not null,
+    id_categorie int not null ,
+    FOREIGN KEY (id_categorie) REFERENCES categorie (id_categorie) ON DELETE CASCADE
+);
+CREATE TABLE avis (
+id_avis int not null PRIMARY KEY,
+    note int not null,
+    id_vehicule int not null,
+    FOREIGN KEY (id_vehicule) REFERENCES vehicule (id_vehicule) ON DELETE CASCADE
+);
+CREATE TABLE reservation (
+id_reservation int not null PRIMARY KEY,
+    date int not null,
+    prix int not null,
+    lieu varchar(70) not null,
+    id_user int not null,
+    FOREIGN key (id_user) REFERENCES utilisateur(id_user)ON DELETE CASCADE,
+    id_vehicule int not null ,
+    FOREIGN KEY (id_vehicule) REFERENCES vehicule(id_vehicule)ON DELETE CASCADE
+
+);
