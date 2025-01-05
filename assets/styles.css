@@ -1,0 +1,87 @@
+/* Custom styles for Drive & Loc */
+.logo {
+    height: 120px;
+    width: 120px;
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1));
+}
+
+.brand-name {
+    font-family: 'Racing Sans One', cursive;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #ffffff, #e2e8f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.brand-name:hover {
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+}
+
+.hero-section {
+    background: linear-gradient(rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.9));
+    padding: 4rem 0;
+    color: white;
+}
+
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+.footer {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 3rem 0;
+}
+
+.footer-link {
+    color: #e5e7eb;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: white;
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+.register-background {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.register-title {
+    font-family: 'Racing Sans One', cursive;
+    background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+}
