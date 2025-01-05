@@ -1,43 +1,65 @@
-CREATE TABLE role (
-id_role int not null AUTO_INCREMENT PRIMARY KEY,
-    nom_role varchar (200) not null
-);
-CREATE TABLE utilisateur(
-    id_user int not null PRIMARY KEY AUTO_INCREMENT,
-    nom_user varchar(200) NOT null,
-    email varchar (200) not null,
-    PASSWORD varchar (200) not null,
-    id_role int not null ,
-    FOREIGN key (id_role) REFERENCES role(id_role) ON DELETE CASCADE
+-- Create database
+CREATE DATABASE IF NOT EXISTS driveapp_db;
+USE driveapp_db;
+
+-- Users table
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('client', 'admin') DEFAULT 'client',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE categorie (
-id_categorie int not null PRIMARY key ,
-    nom varchar (100) not null 
+-- Categories table
+CREATE TABLE categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE vehicule(
-id_vehicule int not null PRIMARY key ,
-    marque varchar (100)not null,
-    madele varchar (100) not null ,
-    prix int not null,
-    id_categorie int not null ,
-    FOREIGN KEY (id_categorie) REFERENCES categorie (id_categorie) ON DELETE CASCADE
+-- Vehicles table
+CREATE TABLE vehicles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    category_id INT,
+    model VARCHAR(100) NOT NULL,
+    brand VARCHAR(50) NOT NULL,
+    year INT NOT NULL,
+    price_per_day DECIMAL(10,2) NOT NULL,
+    description TEXT,
+    image_url VARCHAR(255),
+    status ENUM('available', 'reserved', 'maintenance') DEFAULT 'available',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
 );
-CREATE TABLE avis (
-id_avis int not null PRIMARY KEY,
-    note int not null,
-    id_vehicule int not null,
-    FOREIGN KEY (id_vehicule) REFERENCES vehicule (id_vehicule) ON DELETE CASCADE
-);
-CREATE TABLE reservation (
-id_reservation int not null PRIMARY KEY,
-    date int not null,
-    prix int not null,
-    lieu varchar(70) not null,
-    id_user int not null,
-    FOREIGN key (id_user) REFERENCES utilisateur(id_user)ON DELETE CASCADE,
-    id_vehicule int not null ,
-    FOREIGN KEY (id_vehicule) REFERENCES vehicule(id_vehicule)ON DELETE CASCADE
 
+-- Reservations table
+CREATE TABLE reservations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    vehicle_id INT,
+    pickup_date DATE NOT NULL,
+    return_date DATE NOT NULL,
+    pickup_location VARCHAR(255) NOT NULL,
+    return_location VARCHAR(255) NOT NULL,
+    status ENUM('pending', 'confirmed', 'completed', 'cancelled') DEFAULT 'pending',
+    total_price DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)
+);
+
+-- Reviews table
+CREATE TABLE reviews (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    vehicle_id INT,
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    comment TEXT,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)
 );
