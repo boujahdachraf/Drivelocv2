@@ -63,3 +63,52 @@ CREATE TABLE reviews (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)
 );
+
+CREATE TABLE tag (
+    id_tag INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nom_tag VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE theme (
+    id_theme INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nom_theme VARCHAR(200) NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    images VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE article (
+    id_article INT NOT NULL AUTO_INCREMENT,
+    titre VARCHAR(200) NOT NULL,
+    image VARCHAR(200) NOT NULL,
+    date_creation DATE NOT NULL DEFAULT CURRENT_DATE,
+    id_theme INT NOT NULL,
+    PRIMARY KEY (id_article),
+    FOREIGN KEY (id_theme) REFERENCES theme(id_theme) ON DELETE CASCADE,
+statut ENUM('en_attente', 'approuvé') DEFAULT 'en_attente'
+);
+
+CREATE TABLE articletag (
+    id_article INT NOT NULL,
+    id_tag INT NOT NULL,
+    PRIMARY KEY (id_article, id_tag),
+    FOREIGN KEY (id_article) REFERENCES article(id_article) ON DELETE CASCADE,
+    FOREIGN KEY (id_tag) REFERENCES tag(id_tag) ON DELETE CASCADE
+);
+
+CREATE TABLE commentaire (
+    id_commentaire INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    contenu VARCHAR(200) NOT NULL,
+    creation DATE NOT NULL DEFAULT CURRENT_DATE,
+    id_article INT NOT NULL,
+    FOREIGN KEY (id_article) REFERENCES article(id_article),
+    id_user INT NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES utilisateur(id_user)
+);
+
+CREATE TABLE favories (
+    id_favories INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES utilisateur(id_user),
+    id_article INT NOT NULL,
+    FOREIGN KEY (id_article) REFERENCES article(id_article)
+);
